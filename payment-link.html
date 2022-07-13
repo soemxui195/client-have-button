@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+    integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>Form</title>
+
+  <style>
+    body {
+      background-color: #ffffff;
+      font-size: 18px;
+      line-height: 30px;
+      padding: 0;
+      margin: 0;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    .banner {
+      background-color: #f2f3f9;
+      background-image: url('http://softalab.com/paylio/paylio-v1/assets/images/banner-map.png');
+      background-repeat: no-repeat;
+      background-position: top 100px right;
+      position: relative;
+      background-size: auto;
+      padding: 70px 0 150px;
+    }
+
+    .checkout {
+      border-radius: 10px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 2px 3.464px 24px 0px rgb(106 105 194 / 25%);
+    }
+
+    h2 {
+      text-transform: uppercase;
+      text-align: center;
+      margin: 30px 0 40px;
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    h5 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    .form-content {
+      background: #F8F8FF;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .input-control {
+      position: relative;
+      width: 100%;
+      height: 3rem;
+      border: 1px solid #ACB1C8;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .input-label {
+      position: absolute;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: inherit;
+      left: 1rem;
+      top: 0.5rem;
+      padding: 0 0.25rem;
+      background: #F8F8FF;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus+.input-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      top: -0.75rem;
+      left: 1rem;
+      z-index: 5;
+      color: #000000;
+    }
+
+    .input-field:not(:placeholder-shown).input-field:not(:focus)+.input-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      top: -0.75rem;
+      left: 1rem;
+      z-index: 5;
+    }
+
+    .input-field {
+      font-size: 14px;
+      padding: 10px 25px;
+      border: 1px solid transparent;
+      color: #000000;
+      font-weight: bold;
+      background: transparent;
+      transition: all 0.3s ease;
+      width: 100%;
+      height: 100%;
+    }
+
+    .mdr {
+      font-size: 16px;
+      line-height: 22px;
+      color: #4743c9;
+    }
+
+    .cmn-btn {
+      margin: 24px 0;
+      padding: 10px 30px;
+      font-weight: 600;
+      text-align: center;
+      background: #4743c9;
+      color: #fff;
+      transition: 0.3s;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="banner">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-xxl-4 col-xl-5 col-md-6">
+          <div class="checkout">
+            <h2>Tạo link thanh toán</h2>
+            <!-- <form onsubmit="()=>{}"> -->
+
+            <div class="form-content">
+
+              <div class="input-control">
+                <input class="input-field" id="order_id" />
+                <label class="input-label" for="">Mã đơn hàng</label>
+              </div>
+              <div class="input-control">
+                <input class="input-field" id="amount" />
+                <label class="input-label" for="">Số tiền</label>
+              </div>
+            </div>
+
+            <button class="cmn-btn" onclick="onSubmit()">
+              Tạo link
+            </button>
+
+            <button onClick="sendMessage()">Send hello to window 2</button>
+
+            <script>
+              window.onload = function () {
+                const currentLocaltion = window.location.href;
+                const render = `<!-- ECO Pay Logo --><table border='0' cellpadding='10' cellspacing='0' align='center'><tr><td align='center'></td></tr><tr><td align='center'><a title='How ECO PAY Works' onclick="sendMessage()"><img src=https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png alt='Pay with ECO PAY | Large' /></a></td></tr></table><!-- ECO Pay Logo -->`
+                // $('#ecopay-button-paynow').html(render);
+                const el = document.getElementById('ecopay-button-paynow');
+                el.innerHTML = render;
+
+              };
+              function sendMessage() {
+                console.log('dc k :>> ');
+                const popup = window.open('http://127.0.0.1:5501/src/request-payment-link.html', 'WIEcoPay', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700');
+                // popup.postMessage("Hello, window-2! i am window-1", "http://127.0.0.1:5500/request-payment-link.html");
+                var timer = setInterval(function () {
+                  if (popup.closed) {
+                    clearInterval(timer);
+                    // alert('closed');
+                    window.addEventListener('message', receiveMessage, false);
+
+                    function receiveMessage(evt) {
+                      console.log('evt.origin :>> ', evt);
+                      if (evt.origin !== 'http://127.0.0.1:5501') return;
+                      alert("got message: " + evt.data);
+
+                    }
+                  }
+                }, 0);
+              }
+
+
+            </script>
+            <div id="ecopay-button-paynow"></div>
+            <a href="" id="payment_link"></a>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="checkout">
+      <div>
+        <label for="">order_id</label>
+        <input type="text" id="order_id" value="" />
+      </div>
+      <div>
+        <label for="">amount</label>
+        <input type="text" id="amount" value="" />
+      </div>
+      <div>
+        <label for="">description</label>
+        <input type="text" id="description" value="thanh toan" />
+      </div>
+
+      <button onclick="onSubmit()">Submit</button>
+    </div> -->
+
+  <!-- <div id="result"></div> -->
+  <script>
+    const env = 1;
+    const is_local = false;
+    const secretKey = "FINVIET_SECRET_KEY";
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGZlMmE5M2NlMjc0YWIzNDE1NjI4YTUiLCJ1c2VySWQiOiI2MGZlMmE5M2NlMjc0YWIzNDE1NjI4YTUiLCJpYXQiOjE2NTQ3MDUzNDUsImV4cCI6MTY1NDc5MTc0NX0.283jh0gfcBwvuh33fuw2Fhdn-IuQDXNcI3Qes6Om7rY";
+    const baseUrl =
+      "file:///home/duongvong/Documents/work/Finviet/Projects/ecopay/test/request-payment-link.html";
+    const initOrderHost = env
+      ? "https://ecopay-api-test.finviet.com.vn"
+      : "http://localhost:8230";
+
+    const amountDom = document.getElementById("amount");
+    // const description = document.getElementById("description");
+    const orderIdDom = document.getElementById("order_id");
+    const paymentLinkDom = document.getElementById("payment_link");
+    // const resultHtml = document.getElementById("result");
+
+    const store_label = "Sacom";
+    const store_code = "0905505048";
+    const merchant_code = "FINVIET";
+
+    function createChecksum(data, secretKey) {
+      const value = Object.keys(data)
+        .sort()
+        .reduce((accumulator, key) => (accumulator += data[key]), "");
+      const hash = CryptoJS.HmacSHA256(value, secretKey);
+      return hash.toString(CryptoJS.enc.Hex);
+    }
+
+    const onSubmit = () => {
+      const data = {
+        merchant_code: merchant_code,
+        description:
+          "TT" + (orderIdDom.value ? " DH " + orderIdDom.value : " tai quay"),
+        store_code: store_code,
+      };
+      if (orderIdDom.value) {
+        data.order_id = orderIdDom.value;
+      }
+      if (amountDom.value) {
+        data.amount = Number(amountDom.value);
+      }
+      console.log("data", data);
+      // resultHtml.textContent = "fetching....";
+      let url = initOrderHost + "/payment-link";
+
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data), // string or object
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      })
+        .then((data) => {
+          return data.json();
+        })
+        .then((response) => {
+          console.log("response", response);
+          // resultHtml.textContent = "";
+          if (response && response.data && response.data.payment_url) {
+            let url = baseUrl + response.data.payment_url;
+            if (amountDom.value) {
+              url += `amount = ${amountDom.value}`;
+            }
+            paymentLinkDom.href = url;
+            paymentLinkDom.textContent = url
+            // window.open(url);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    };
+  </script>
+</body>
+
+</html>
